@@ -9,19 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
-        
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.19.0'
         
-    - name: Install and build
+    - name: Install and build Angular app
       run: |
-        echo "=== Current directory ==="
-        pwd
-        echo "=== Files in root ==="
-        ls -la
+        echo "=== Building Angular project from dashboard-procuratore ==="
+        cd dashboard-procuratore
         npm install
         npm run build:prod
         
@@ -30,6 +29,6 @@ jobs:
       with:
         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         action: "upload"
-        app_location: "/"
-        output_location: "dist/dashboard-procuratore"
+        app_location: "dashboard-procuratore"
+        output_location: "dashboard-procuratore/dist/dashboard-procuratore"
         skip_app_build: true
