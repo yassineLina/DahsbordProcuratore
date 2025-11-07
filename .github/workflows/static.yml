@@ -15,26 +15,12 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.19.0'
-        cache: 'npm'
-        cache-dependency-path: 'dashboard-procuratore/package-lock.json'
         
-    - name: Install dependencies
+    - name: Install and build
       working-directory: ./dashboard-procuratore
       run: |
-        npm ci
-        
-    - name: Build Angular app
-      working-directory: ./dashboard-procuratore
-      run: |
-        ng build --configuration production
-        
-    - name: Verify build output
-      working-directory: ./dashboard-procuratore
-      run: |
-        echo "=== Build files ==="
-        ls -la dist/dashboard-procuratore/
-        echo "=== Checking index.html ==="
-        cat dist/dashboard-procuratore/index.html | grep -o '<base href="[^"]*"'
+        npm install
+        npm run build:prod
         
     - name: Deploy to Azure Static Web Apps
       uses: Azure/static-web-apps-deploy@v1
